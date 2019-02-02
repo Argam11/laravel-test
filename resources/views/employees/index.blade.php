@@ -44,7 +44,7 @@
             <td>{{ $employee->companies->name }}</td>
             <td>{{ $employee->email }}</td>
             <td>{{ $employee->phone }}</td>
-            <td><a href="{{ route('employees.edit',$employee->id)}}" class="btn btn-primary">Edit</a></td>
+            <td><a href="{{ route('employees.edit', $employee->id)}}" class="btn btn-primary">Edit</a></td>
             <td>
                 <form action="{{ route('employees.destroy', $employee->id)}}" method="post">
                   @csrf
@@ -57,5 +57,6 @@
         {{ $employees->links() }}
     </tbody>
   </table>
+  
 <div>
 @endsection

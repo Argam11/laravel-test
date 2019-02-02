@@ -27,8 +27,8 @@
     </div>
     <br />
       <form method="post" action="{{ route('employees.update', $employee->id) }}">
-        @method('PATCH')
         @csrf
+        @method('PATCH')
         <div class="form-group">
           <label for="name">Firstname:</label>
           <input type="text" class="form-control" name="first_name" value={{ $employee->first_name }} />

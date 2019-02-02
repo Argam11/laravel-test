@@ -30,8 +30,8 @@
     </div>
     <br />
       <form method="post" action="{{ route('companies.store') }}" enctype="multipart/form-data">
+          @csrf
           <div class="form-group">
-              @csrf
               <label for="name">Name: </label>
               <input type="text" class="form-control" name="name"/>
           </div>

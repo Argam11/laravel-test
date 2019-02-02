@@ -27,8 +27,8 @@
     </div>
     <br />
       <form method="post" action="{{ route('companies.update', $company->id) }}" enctype="multipart/form-data">
-        @method('PATCH')
         @csrf
+        @method('PATCH')
         <div class="form-group">
           <label for="name">Name:</label>
           <input type="text" class="form-control" name="name" value={{ $company->name }} />
@@ -39,7 +39,7 @@
         </div>
         <div class="form-group">
           <label for="quantity">Logo:</label>
-          <input type="file" class="form-control" name="logo" value="storage/{{$company->logo}}" />
+          <input type="file" class="form-control" name="logo" value="{{ asset('/storage/'.$company->logo) }}" />
         </div>
         <div class="form-group">
           <label for="quantity">Website:</label>

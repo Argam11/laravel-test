@@ -1,19 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\Company;
+use App\Http\Controllers\Controller;
 use App\Models\Employee;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Company;
 use App\Http\Requests\ValidationEmployees;
 
 class EmployeesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +18,7 @@ class EmployeesController extends Controller
     public function index()
     {
         $employees = Employee::with('companies')->paginate(10);
-        return view('employees.index', compact('employees'));
+        return response()->json($employees);
     }
 
     /**
@@ -33,7 +29,7 @@ class EmployeesController extends Controller
     public function create()
     {
         $companies = Company::all();
-        return view('employees.create', compact('companies'));
+        return response()->json($companies);
     }
 
     /**
@@ -52,7 +48,18 @@ class EmployeesController extends Controller
             'phone' => $request->get('phone')
         ]);
         $employees->save();
-        return redirect('/employees')->with('success', 'Stock has been added');
+        return response()->json('Employee duct Added Successfully.');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
     }
 
     /**
@@ -62,10 +69,10 @@ class EmployeesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $companies = Company::all();
         $employee = Employee::find($id);
-        return view('employees.edit', compact('employee', 'companies'));
+        return response()->json(['employee' => $employee, 'companies' => $companies]);
     }
 
     /**
@@ -84,7 +91,7 @@ class EmployeesController extends Controller
         $employee->email = $request->get('email');
         $employee->phone = $request->get('phone');
         $employee->save();
-        return redirect('/employees')->with('success', 'Stock has been updated');
+        return response()->json('Employee duct Update Successfully.');
     }
 
     /**
@@ -97,6 +104,6 @@ class EmployeesController extends Controller
     {
         $employee = Employee::find($id);
         $employee->delete();
-        return redirect('/employees')->with('success', 'Stock has been deleted Successfully');
+        return response()->json('Employee duct Update Successfully.');
     }
 }

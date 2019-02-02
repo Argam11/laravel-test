@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Company;
-use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\ValidationCompanies;
 
 class CompaniesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +16,7 @@ class CompaniesController extends Controller
     public function index()
     {
         $companies = Company::paginate(10);
-        return view('companies.index', compact('companies'));
+        return response()->json($companies);
     }
 
     /**
@@ -31,7 +26,7 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        return view('companies.create');
+        //
     }
 
     /**
@@ -40,7 +35,7 @@ class CompaniesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidationCompanies $request)
+    public function store(Request $request)
     {
         if ($logo = $request->file('logo')) {
             $name = $logo->getClientoriginalName();
@@ -53,7 +48,18 @@ class CompaniesController extends Controller
             'website' => $request->get('website')
         ]);
         $companies->save();
-        return redirect('/companies')->with('success', 'Stock has been added');
+        return response()->json('Successfully added');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
     }
 
     /**
@@ -65,7 +71,7 @@ class CompaniesController extends Controller
     public function edit($id)
     {
         $company = Company::find($id);
-        return view('companies.edit', compact('company'));
+        return response()->json($company);
     }
 
     /**
@@ -75,19 +81,20 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ValidationCompanies $request, $id)
+    public function update(Request $request, $id)
     {
-        $company = Company::find($id);
-        $company->name = $request->get('name');
-        $company->email = $request->get('email');
-        $company->website = $request->get('website');
-        if ($logo = $request->file('logo')) {
-            $name = $logo->getClientoriginalName();
-            $logo->storeAs('public', $name);
-            $company->logo = $request->file('logo')->getClientoriginalName();
-        }
-        $company->save();
-        return redirect('/companies')->with('success', 'Stock has been updated');
+        echo $request->get('name');
+        // $company = Company::find($id);
+        // $company->name = $request->get('name');
+        // $company->email = $request->get('email');
+        // $company->website = $request->get('website');
+        // if ($logo = $request->file('logo')) {
+        //     $name = $logo->getClientoriginalName();
+        //     $logo->storeAs('public', $name);
+        //     $company->logo = $request->file('logo')->getClientoriginalName();
+        // }
+        // $company->save();
+        // return response()->json('Company duct Update Successfully.');
     }
 
     /**
@@ -98,8 +105,8 @@ class CompaniesController extends Controller
      */
     public function destroy($id)
     {
-        $company = Company::find($id);
-        $company->delete();
-        return redirect('/companies')->with('success', 'Stock has been deleted Successfully');
+        $employee = Company::find($id);
+        $employee->delete();
+        return response()->json('Company duct Update Successfully.');
     }
 }

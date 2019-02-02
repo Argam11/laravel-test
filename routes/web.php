@@ -11,15 +11,19 @@
 |
 */
 
-Route::get('/', function () {
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::resource('/companies', 'CompaniesController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+// Route::resource('/employees', 'EmployeesController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+
+// Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+// Route::post('login', 'Auth\LoginController@login');
+// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::any('{all}', function () {
     return view('welcome');
-});
-
-Route::resource('/companies', 'CompaniesController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
-Route::resource('/employees', 'EmployeesController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
-
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
-
-Route::get('/home', 'HomeController@index')->name('home');
+ })->where('all', '.*');
