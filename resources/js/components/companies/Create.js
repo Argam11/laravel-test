@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import axios, { post } from 'axios';
 
  class Create extends Component {
@@ -11,6 +11,10 @@ import axios, { post } from 'axios';
             logo: "",
             website: ""
         }
+        this.config = {headers: {
+            'Authorization':'Bearer ' + localStorage.getItem('token'),
+            'content-type': 'multipart/form-data'
+        }};
         this.handleChangeName = this.handleChangeName.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangeLogo = this.handleChangeLogo.bind(this);
@@ -39,12 +43,7 @@ import axios, { post } from 'axios';
         e.preventDefault();
         let form = document.forms.namedItem("compForm");
         let formData = new FormData(form);
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
-        axios.post('/api/companies', formData, config)
+        axios.post('/api/companies', formData, this.config)
         .then(function (response) {
             window.location.href = "/companies";
         })
@@ -53,7 +52,9 @@ import axios, { post } from 'axios';
         });
     }
     render() {
-        
+        if(!localStorage.getItem('token')) {
+            return <Redirect to="/login" />;
+        }
         return (
             <div className="container">
                 <div className="row justify-content-center">

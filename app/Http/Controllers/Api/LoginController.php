@@ -15,14 +15,14 @@ class LoginController extends Controller
 {
     public function login(ValidationUser $request)
     {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('LaraPassport')->accessToken; 
             return response()->json([
               'status' => 'success',
               'data' => $success
             ]); 
-          } else { 
+          } else {
             return response()->json([
               'status' => 'error',
               'data' => 'Unauthorized Access11'

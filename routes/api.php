@@ -13,13 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('users', function(Request $request) {
-//     return $request->user();
-// });
-
-Route::resource('/companies', 'Api\CompaniesController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
-Route::resource('/employees', 'Api\EmployeesController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
-
+ Route::middleware('auth:api')->get('users', function(Request $request) {
+     return $request->user();
+ });
+ Route::middleware('auth:api')->group(function() {
+    Route::resource('/companies', 'Api\CompaniesController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+    Route::resource('/employees', 'Api\EmployeesController', ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+});
 // Route::get('login', 'Api\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Api\LoginController@login')->name('login');
 // Route::post('logout', 'Api\LoginController@logout')->name('logout');

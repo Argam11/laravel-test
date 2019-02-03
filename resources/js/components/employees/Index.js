@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 
  class Index extends Component {
@@ -8,10 +8,11 @@ import axios from 'axios';
         this.state = {
             employees: []
         }
+        this.config = {headers: {'Authorization':'Bearer ' + localStorage.getItem('token')}};
         this.deleteEmployee = this.deleteEmployee.bind(this);
     }
     deleteEmployee(id) {
-        axios.delete(`/api/employees/${id}`)
+        axios.delete(`/api/employees/${id}`, this.config)
             .then(function (response) {
                 window.location.href = "/employees";
             })
@@ -20,13 +21,24 @@ import axios from 'axios';
             });
     }
     componentDidMount () {
-        axios.get('/api/employees').then(response => {
-            this.setState({
-                employees: response.data.data
+        if(localStorage.getItem('token')) {
+            axios.get('/api/employees', this.config).then(response => {
+                this.setState({
+                    employees: response.data.data
+                })
             })
-        })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
     }
     render() {
+        if(!localStorage.getItem('token')) {
+            return <Redirect to={{
+                        pathname: '/login',
+                        state: { history: '/employees' }
+                    }} />;
+        }
         return (
             <div className="container">
                 <div className="row justify-content-center">

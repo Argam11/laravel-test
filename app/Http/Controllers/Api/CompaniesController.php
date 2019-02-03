@@ -83,18 +83,17 @@ class CompaniesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo $request->get('name');
-        // $company = Company::find($id);
-        // $company->name = $request->get('name');
-        // $company->email = $request->get('email');
-        // $company->website = $request->get('website');
-        // if ($logo = $request->file('logo')) {
-        //     $name = $logo->getClientoriginalName();
-        //     $logo->storeAs('public', $name);
-        //     $company->logo = $request->file('logo')->getClientoriginalName();
-        // }
-        // $company->save();
-        // return response()->json('Company duct Update Successfully.');
+         $company = Company::find($id);
+         $company->name = $request->get('name');
+         $company->email = $request->get('email');
+         $company->website = $request->get('website');
+         if ($logo = $request->file('logo')) {
+             $name = $logo->getClientoriginalName();
+             $logo->storeAs('public', $name);
+             $company->logo = $request->file('logo')->getClientoriginalName();
+         }
+         $company->save();
+         return response()->json('Company duct Update Successfully.');
     }
 
     /**

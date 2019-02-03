@@ -7,18 +7,9 @@ export default class Home extends Component {
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-8">
-                        <div className="card">
-                            <div className="card-header">Example Component</div>
-                            <div className="top-right links">
-                                <Router>
-                                    <div>
-                                        <Link to="/login">Login</Link>
-                                    </div>
-                                </Router>
-                            </div>
-                            <div className="card-body">
-                                I'm an example component!
-                            </div>
+                        <div className="mt-5 text-center">
+                            <h1>Welcome</h1>
+                            <p>Home page</p>
                         </div>
                     </div>
                 </div>

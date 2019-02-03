@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import './companies.css';
 
+import Home from './Home';
 import Header from './Header';
-import Login from './login';
-import Home from './home';
+import Login from './Login';
 import CompaniesIndex from './companies/Index';
 import CompaniesCreate from './companies/Create';
 import CompaniesEdit from './companies/Edit';
@@ -19,11 +19,10 @@ class App extends Component {
         return (
                 <Router>
                     <div className="p-3">
-                        {/* <Route exact path="/" component={Home} />
-                        <Route path="/login" component={Login} />
-                        <Route path="/companies" component={Companies} /> */}
                         <Header />
                         <Switch>
+                            <Route exact path='/' component={Home} />
+                            <Route path='/login' component={Login} />
                             <Route exact path='/companies' component={CompaniesIndex} />
                             <Route path='/companies/create' component={CompaniesCreate} />
                             <Route path='/companies/:id/edit' component={CompaniesEdit} />

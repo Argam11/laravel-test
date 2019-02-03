@@ -38,7 +38,7 @@ class EmployeesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ValidationEmployees $request)
+    public function store(Request $request)
     {
         $employees = new Employee([
             'first_name' => $request->get('first_name'),

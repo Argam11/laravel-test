@@ -1,16 +1,19 @@
 .uper {
     margin-top: 40px;
-  }
-  img{
-      width: 100px;
-  }
-  input[type='file']{
+}
+img{
+    width: 100px;
+}
+input[type='file']{
     line-height: 1.2;
-  }
-  .navbar .container {
+}
+.navbar .container {
     display: flex;
     justify-content: flex-start;
-  }
-  .navbar .container a {
+}
+.navbar .container a {
     margin: 0 10px;
-  }
+}
+.login-form{
+    padding: 50px 100px;
+}
