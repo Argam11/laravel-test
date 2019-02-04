@@ -31,4 +31,15 @@ class ValidationEmployees extends FormRequest
             'phone' => 'required|integer|min:0|digits_between: 0,10',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'first_name.required' => 'Firstname is required!',
+            'last_name.required' => 'Lastname is required!',
+            'company_id.required' => 'company is required!',
+            'email.required' => 'Email is required!',
+            'phone.required' => 'Phone is required!'
+        ];
+    }
 }

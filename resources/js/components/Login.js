@@ -9,6 +9,7 @@ class Login extends React.Component {
         this.state = {
             email: "",
             password: "",
+            errors: []
         }
         this.config = {headers: {'content-type': 'application/json'}};
         this.handleChangeLogin = this.handleChangeLogin.bind(this);
@@ -30,6 +31,11 @@ class Login extends React.Component {
                 }
             }
         })
+        .catch(error => {
+            if(error.response.data.errors) {
+                this.setState({errors: Object.values(error.response.data.errors)});
+            }
+        });
     }
     render() {
         return (
@@ -38,7 +44,17 @@ class Login extends React.Component {
                     <div className="col-md-8">
                         <div className="card">
                             <h1 className="text-center mt-3">Login page</h1>
-                            <form className="login-form" method="post" onSubmit={this.loginFunction} >
+                            {
+                                this.state.errors.length > 0 && 
+                                <div className="alert alert-danger">
+                                    <ul>
+                                        {
+                                            this.state.errors.map((error, key) => <li key={key}>{ error }</li>)
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                            <form className="login-form" method="post" onSubmit={this.loginFunction}>
                                 <div className="form-group">
                                     <label htmlFor="email">Email: </label>
                                     <input type="text" className="form-control" name="email" onChange={this.handleChangeLogin} defaultValue={this.state.first_name} />
