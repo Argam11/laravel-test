@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Http\Requests\ValidationCompanies;
 
 class CompaniesController extends Controller
 {
@@ -35,7 +36,7 @@ class CompaniesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ValidationCompanies $request)
     {
         if ($logo = $request->file('logo')) {
             $name = $logo->getClientoriginalName();
@@ -81,7 +82,7 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ValidationCompanies $request, $id)
     {
          $company = Company::find($id);
          $company->name = $request->get('name');

@@ -30,4 +30,14 @@ class ValidationCompanies extends FormRequest
             'website' => 'required|url|max:255',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Name is required!',
+            'email.required' => 'Email is required!',
+            'logo.required' => 'Logo is required!',
+            'website.required' => 'Website is required!',
+        ];
+    }
 }

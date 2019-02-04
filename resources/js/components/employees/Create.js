@@ -11,7 +11,8 @@ import axios from 'axios';
             last_name: "",
             company_id: "",
             email: "",
-            phone: ""
+            phone: "",
+            errors: []
         }
         this.config = {headers: {'Authorization':'Bearer ' + localStorage.getItem('token')}};
         this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
@@ -61,8 +62,10 @@ import axios from 'axios';
             .then(function (response) {
                 window.location.href = "/employees";
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(error => {
+                if(error.response.data.errors) {
+                    this.setState({errors: Object.values(error.response.data.errors)});
+                }
             });
     }
     componentDidMount () {
@@ -86,6 +89,16 @@ import axios from 'axios';
                             <div className="card-header">
                                 Add company
                             </div>
+                            {
+                                this.state.errors.length > 0 && 
+                                <div className="alert alert-danger">
+                                    <ul>
+                                        {
+                                            this.state.errors.map((error, key) => <li key={key}>{ error }</li>)
+                                        }
+                                    </ul>
+                                </div>
+                            }
                             <div className="card-body">
                                 <form method="post"  onSubmit={this.createFunction} encType="multipart/form-data">
                                     <div className="form-group">

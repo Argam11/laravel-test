@@ -9,7 +9,8 @@ import axios, { post } from 'axios';
             name: "",
             email: "",
             logo: "",
-            website: ""
+            website: "",
+            errors: []
         }
         this.config = {headers: {
             'Authorization':'Bearer ' + localStorage.getItem('token'),
@@ -47,8 +48,10 @@ import axios, { post } from 'axios';
         .then(function (response) {
             window.location.href = "/companies";
         })
-        .catch(function (error) {
-            console.log(error);
+        .catch(error => {
+            if(error.response.data.errors) {
+                this.setState({errors: Object.values(error.response.data.errors)});
+            }
         });
     }
     render() {
@@ -63,6 +66,16 @@ import axios, { post } from 'axios';
                             <div className="card-header">
                                 Add company
                             </div>
+                            {
+                                this.state.errors.length > 0 && 
+                                <div className="alert alert-danger">
+                                    <ul>
+                                        {
+                                            this.state.errors.map((error, key) => <li key={key}>{ error }</li>)
+                                        }
+                                    </ul>
+                                </div>
+                            }
                             <div className="card-body">
                                 <form method="post" name="compForm"  onSubmit={this.createFunction} encType="multipart/form-data">
                                     <div className="form-group">
